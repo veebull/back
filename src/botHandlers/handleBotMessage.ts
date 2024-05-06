@@ -1,23 +1,23 @@
 import TelegramBot from "node-telegram-bot-api";
-import path from 'path';
 import fs from 'fs';
-
-const IMG_PATH = path.join(__dirname, '../assets', 'cat.jpg');
+import User from "src/models/User";
+import { IMG_PATH, WEB_APP_URL, commands, feedbackUrl, msgOnCommands } from "src/lib/constants";
 
 export default async function handleBotMessage(msg: TelegramBot.Message, bot: TelegramBot) {
+  const { id, first_name, username, is_bot, language_code, last_name } = msg.from!;
   const chatId = msg.chat.id;
   const text = msg.text;
-  const WEB_APP_URL = process.env.WEB_APP_URL!;
 
 
-  if (text === '/start') {
+  if (text === commands.start) {
     await bot.sendPhoto(chatId, fs.readFileSync(IMG_PATH), {
-      caption: 'Welcome! How are you? Play?',
+      caption: msgOnCommands.msgOnStart,
       reply_markup: {
         inline_keyboard: [
           [{ text: 'to the game', web_app: { url: WEB_APP_URL } }],
-          [{ text: 'subscribe to updates', callback_data: 'subscribe' }],
-          [{ text: "feedback", url: "https://t.me/Frich22" }],
+          [{ text: 'subscribe to updates', callback_data: commands.subscribe }],
+          [{ text: 'unsubscribe', callback_data: commands.unsubscribe }],
+          [{ text: "feedback", url: feedbackUrl }],
         ]
       }
     }, {
@@ -25,4 +25,35 @@ export default async function handleBotMessage(msg: TelegramBot.Message, bot: Te
       filename: 'cat.jpg'
     })
   }
+
+  if (text === commands.subscribe) {
+    try {
+      const existingUser = await User.findOne({ tgUserId: id });
+
+      if (existingUser?.isSubscribed) {
+        await bot.sendMessage(`${chatId}`, msgOnCommands.msgOnSubscribeRepeat);
+      } else {
+        await User.create({
+          tgUserId: id,
+          firstName: first_name,
+          isSubscribed: true,
+          lastName: last_name || '',
+          username: username || '',
+          is_bot: is_bot || null,
+          languageCode: language_code || '',
+        })
+
+        await bot.sendMessage(`${chatId}`, msgOnCommands.msgOnSubscribeSuccess);
+      }
+    } catch (err) {
+      console.log(err)
+      bot.sendMessage(`${chatId}`, 'Что-то пошло не так');
+    }
+  }
+
+  // if (text === commands.unsubscribe) {
+  //   try {
+  //     const
+  //   }
+  // }
 }

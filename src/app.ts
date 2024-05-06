@@ -1,8 +1,10 @@
+import { MONGO_URL, PORT, mongooseOptions } from './lib/constants';
+
 const express = require('express') as typeof import('express');
 const cors = require('cors');
+const mongoose = require('mongoose') as typeof import('mongoose');
 
-const PORT = process.env.PORT || 5000;
-
+mongoose.connect(MONGO_URL, mongooseOptions);
 const app = express();
 
 app.use(express.json());
