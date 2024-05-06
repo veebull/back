@@ -1,4 +1,7 @@
 import path from "path";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const IMG_PATH = path.join(__dirname, '../assets', 'cat.jpg');
 export const PORT = process.env.PORT || 5000;
@@ -19,8 +22,14 @@ export const commands = {
 }
 
 export const msgOnCommands = {
-  msgOnSubscribeSuccess: 'Мы ещё в разработке... Но спасибо за интерес!',
-  msgOnSubscribeRepeat: 'Не переживайте, вы уже подписаны.',
   msgOnStart: 'Welcome! How are you? Play?',
-  msgOnUnsubscribe: 'Мы ещё в разработке... Но спасибо за интерес!',
+
+  msgOnSubscribeSuccess: 'Успешная подписка!',
+  msgOnSubscribeRepeat: 'Не переживайте, вы уже подписаны.',
+  msgOnSubscribeError: 'Что-то пошло не так',
+
+  msgOnUnsubscribeSuccess: 'Подписка отменена.',
+  msgOnUnsubscribeRepeat: 'Не переживайте, вы уже отписались.',
+  msgOnUnsubscribeNoRegister: 'Вы ещё не подписались',
+  msgOnUnsubscribeError: 'Что-то пошло не так',
 }
