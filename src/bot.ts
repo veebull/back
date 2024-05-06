@@ -13,6 +13,7 @@ bot.on('message', async (msg) => {
   if (text === commands.start) await handleBotStart(chatId, bot);
   if (text === commands.subscribe) await handleBotSubscribe(msg.from!, bot, chatId);
   if (text === commands.unsubscribe) await handleBotUnsubscribe(msg.from!, bot, chatId);
+  if (text === commands.help) await bot.sendMessage(`${chatId}`, 'Мы ещё в разработке =)');
 });
 
 bot.on('callback_query', async (query) => {
@@ -21,6 +22,7 @@ bot.on('callback_query', async (query) => {
 
   if (text === commands.subscribe) await handleBotSubscribe(query.from!, bot, chatId, true);
   if (text === commands.unsubscribe) await handleBotUnsubscribe(query.from!, bot, chatId, true);
+  if (text === commands.help) await bot.answerCallbackQuery(chatId, { text: 'Мы ещё в разработке =)' });
 });
 
 // Должно гарантировать корректное завершение работы

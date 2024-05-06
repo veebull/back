@@ -18,11 +18,13 @@ export const feedbackUrl = 'https://t.me/Frich22';
 export const commands = {
   subscribe: '/subscribe',
   unsubscribe: '/unsubscribe',
-  start: '/start'
+  start: '/start',
+  help: '/help',
 }
 
 export const msgOnCommands = {
   msgOnStart: 'Welcome! How are you? Play?',
+  msgOnStartError: 'Старт не удался',
 
   msgOnSubscribeSuccess: 'Успешная подписка!',
   msgOnSubscribeRepeat: 'Не переживайте, вы уже подписаны.',
