@@ -1,0 +1,10 @@
+public
+build
+react-app-env.d.ts
+dist
+node_modules
+
+.env
+.prettierrc.cjs
+.gitignore
+.eslintrc
