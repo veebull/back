@@ -6,7 +6,7 @@ import { IMG_PATH, WEB_APP_URL, commands, feedbackUrl, msgOnCommands } from "src
 
 export default async function handleBotStart(chatId: number, bot: TelegramBot) {
   try {
-    await bot.sendPhoto(chatId, fs.readFileSync(IMG_PATH), {
+    bot.sendPhoto(chatId, fs.readFileSync(IMG_PATH), {
       caption: msgOnCommands.msgOnStart,
       reply_markup: {
         inline_keyboard: [
@@ -23,7 +23,7 @@ export default async function handleBotStart(chatId: number, bot: TelegramBot) {
     })
   } catch (err) {
     console.log(err)
-    await bot.sendMessage(chatId, msgOnCommands.msgOnStartError);
+    bot.sendMessage(chatId, msgOnCommands.msgOnStartError);
   }
 
 }

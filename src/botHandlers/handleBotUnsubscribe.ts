@@ -21,16 +21,16 @@ export default async function handleBotUnsubscribe(
     const existingUser = await User.findOne({ tgUserId: id });
 
     if (!existingUser) {
-      await sendFunc(msgOnCommands.msgOnUnsubscribeNoRegister);
+      sendFunc(msgOnCommands.msgOnUnsubscribeNoRegister);
     } else if (!existingUser?.isSubscribed) {
-      await sendFunc(msgOnCommands.msgOnUnsubscribeRepeat);
+      sendFunc(msgOnCommands.msgOnUnsubscribeRepeat);
     } else {
       await User.findOneAndUpdate({ tgUserId: id }, { isSubscribed: false })
 
-      await sendFunc(msgOnCommands.msgOnUnsubscribeSuccess);
+      sendFunc(msgOnCommands.msgOnUnsubscribeSuccess);
     }
   } catch (err) {
     console.error(err)
-    await sendFunc(msgOnCommands.msgOnUnsubscribeError);
+    sendFunc(msgOnCommands.msgOnUnsubscribeError);
   }
 }

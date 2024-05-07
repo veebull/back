@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     achievements: { type: [], required: false, default: [] },
     tasks: { type: [], required: false, default: [] },
     referalLink: { type: String, required: false, default: '' },
-    byReferral: { type: Number, required: false, default: 0 },
+    byReferral: { type: Number, required: false, default: null },
     annexedByRef: { type: [], required: false, default: [] },
   }
 })
