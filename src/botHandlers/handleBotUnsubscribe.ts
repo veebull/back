@@ -30,7 +30,7 @@ export default async function handleBotUnsubscribe(
       await sendFunc(msgOnCommands.msgOnUnsubscribeSuccess);
     }
   } catch (err) {
-    console.log(err)
+    console.error(err)
     await sendFunc(msgOnCommands.msgOnUnsubscribeError);
   }
 }

@@ -39,7 +39,7 @@ export default async function handleBotSubscribe(
       await sendFunc(msgOnCommands.msgOnSubscribeSuccess);
     }
   } catch (err) {
-    console.log(err)
+    console.error(err)
     await sendFunc(msgOnCommands.msgOnSubscribeError);
   }
 }
