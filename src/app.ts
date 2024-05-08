@@ -17,7 +17,7 @@ app.get('/user', async (req, res) => {
   fabricHandlers(req, res, async () => {
     const id = JSON.parse(req.query.user as string).id;
     const user = await User.findOne({ tgUserId: id });
-    res.send({ data: { user } });
+    res.send({ user });
   })
 });
 
@@ -25,8 +25,7 @@ app.post('/user', async (req, res) => {
   fabricHandlers(req, res, async () => {
     const { id, first_name, username, is_bot, language_code, last_name
     } = JSON.parse(req.query.user as string) as TelegramBot.User;
-
-    await User.create({
+    const userData = {
       tgUserId: id,
       firstName: first_name,
       lastName: last_name || '',
@@ -36,12 +35,31 @@ app.post('/user', async (req, res) => {
       dataGame: {
         name: req?.body?.dataGame?.name,
         byReferral: req.query?.start_param || null,
-        referalLink: `${BOT_NAME}?startapp=${id}`
+        referalLink: `${BOT_NAME}?startapp=${id}`,
+        totalTaps: 0,
+        achievements: [],
+        tasks: [],
+        annexedByRef: [],
       }
-    })
-    const user = await User.findOne({ tgUserId: id });
+    };
 
-    res.send({ data: { user } });
+    const user = await User.findOneAndUpdate({ tgUserId: id }, userData, { upsert: true, new: true });
+
+    res.send({ user });
+  })
+})
+
+app.patch('/user', async (req, res) => {
+  fabricHandlers(req, res, async () => {
+    const { id } = JSON.parse(req.query.user as string) as TelegramBot.User;
+    const newTotalTaps = req?.body?.dataGame?.newTotalTaps;
+    if (newTotalTaps) {
+      await User.findOneAndUpdate(
+        { tgUserId: id },
+        { $set: { 'dataGame.totalTaps': newTotalTaps } },
+        { new: true }
+      );
+    }
   })
 })
 
