@@ -1,6 +1,6 @@
 import TelegramBot from "node-telegram-bot-api";
-import { msgOnCommands } from "src/lib/constants";
-import User from "src/models/User";
+import { msgOnCommands } from "../lib/constants";
+import User from "../models/User";
 
 export default async function handleBotUnsubscribe(
   data: TelegramBot.User,

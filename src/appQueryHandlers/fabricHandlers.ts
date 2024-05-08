@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import authUserTgData from "src/lib/authUserTgData";
+import authUserTgData from "../lib/authUserTgData";
 
 interface CustomError extends Error {
   code?: number;
