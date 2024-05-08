@@ -2,12 +2,14 @@
 
 ### GetStarted
 1. Клонировать репозиторий
-2. cd back
-3. npm i
-4. создать .env на основе .env.example
-5. npm run dev
+2. `cd back`
+3. `npm i`
+4. поднять локально mongodb
+5. создать .env на основе .env.example
+6. `npm run dev`
 
 P.S. важно иметь установленную node.js 
+P.S. о том, как установить и запустить mongoDB https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/
 
 ### TODO
 * добавить сборщик для переноса .env и assets!
