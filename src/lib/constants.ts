@@ -9,6 +9,8 @@ export const MONGO_URL = process.env.MONGO_URL!;
 export const TOKEN = process.env.TOKEN_BOT!;
 export const WEB_APP_URL = process.env.WEB_APP_URL!;
 export const BOT_NAME = 'https://t.me/Clicker_Game_Blockchain_Bot';
+export const BOT_APP_URL = `${BOT_NAME}/game`
+
 
 export const mongooseOptions = {
   serverSelectionTimeoutMS: 5000,

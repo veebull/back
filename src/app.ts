@@ -1,6 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
 import fabricHandlers from './appQueryHandlers/fabricHandlers';
-import { BOT_NAME, MONGO_URL, PORT, mongooseOptions } from './lib/constants';
+import { BOT_APP_URL, MONGO_URL, PORT, mongooseOptions } from './lib/constants';
 import User from './models/User';
 
 const express = require('express') as typeof import('express');
@@ -35,7 +35,7 @@ app.post('/user', async (req, res) => {
       dataGame: {
         name: req?.body?.dataGame?.name,
         byReferral: req.query?.start_param || null,
-        referalLink: `${BOT_NAME}?startapp=${id}`,
+        referalLink: `${BOT_APP_URL}?startapp=${id}`,
         totalTaps: 0,
         achievements: [],
         tasks: [],
