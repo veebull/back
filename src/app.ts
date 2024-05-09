@@ -59,7 +59,11 @@ app.patch('/user', async (req, res) => {
         { $set: { 'dataGame.totalTaps': newTotalTaps } },
         { new: true }
       );
+
+      res.send({ success: true });
     }
+
+    res.send({ success: false });
   })
 })
 
