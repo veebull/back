@@ -9,7 +9,6 @@
     "module": "CommonJS",
     "esModuleInterop": true,
 
-    "rootDir": "./src",
     "resolveJsonModule": true,
     "allowJs": true,
 

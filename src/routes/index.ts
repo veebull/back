@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import authUserTgData from 'src/lib/middlewares/authUserTgData';
+import authUserTgData from '../lib/middlewares/authUserTgData';
 
 const router = Router();
 

@@ -17,9 +17,9 @@ const getLoggerOptions = (filename: string) => ({
         }),
         winston.format.json(),
       ),
+      rotationFormat: '.old',
     } as DailyRotateFileTransportOptions),
   ],
-  format: winston.format.json(),
 });
 
 function createLogger(filename: string, isExpress: true): Handler;

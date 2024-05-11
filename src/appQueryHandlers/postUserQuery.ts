@@ -2,7 +2,7 @@ import User from '../models/User';
 import createAppHandler from './createAppHandler';
 import TelegramBot from 'node-telegram-bot-api';
 import { BOT_APP_URL } from '../lib/constants';
-import { TAppQuery } from 'src/lib/types';
+import { TAppQuery } from '../lib/types';
 
 const postUserQuery: TAppQuery = function (req, res, next) {
   createAppHandler({

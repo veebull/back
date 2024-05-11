@@ -1,7 +1,7 @@
 import User from '../models/User';
 import createAppHandler from './createAppHandler';
 import TelegramBot from 'node-telegram-bot-api';
-import { TAppQuery } from 'src/lib/types';
+import { TAppQuery } from '../lib/types';
 
 const patchUserQuery: TAppQuery = function (req, res, next) {
   createAppHandler({

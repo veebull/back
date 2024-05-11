@@ -1,6 +1,6 @@
+import { TAppQuery } from '../lib/types';
 import User from '../models/User';
 import createAppHandler from './createAppHandler';
-import { TAppQuery } from 'src/lib/types';
 
 const getUserQuery: TAppQuery = function (req, res, next) {
   return createAppHandler({
