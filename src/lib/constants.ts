@@ -10,10 +10,9 @@ export const WEB_APP_URL = process.env.WEB_APP_URL!;
 export const BOT_APP_URL = process.env.BOT_APP_URL!;
 
 export const IMG_PATH = join(__dirname, '../assets', 'cat.jpg');
-export const ALLOWED_ORIGIN = process.env.MODE === 'dev' ? '*.ngrok-free.app' : BOT_APP_URL;
 
 export const corsOptions = {
-  origin: ALLOWED_ORIGIN,
+  origin: WEB_APP_URL,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 

@@ -7,10 +7,12 @@
   "scripts": {
     "dev": "npx tsx watch ./src/index.ts",
     "build": "rimraf ./build && npx tsc",
-    "start": "npm run build && node build/index",
+    "start-linux": "npm run build-linux && node build/index",
+    "start-windows": "npm run build-windows && node build/index",
     "lint": "npx eslint ./src",
     "format": "npx eslint ./src --fix",
-    "build-linux": "npm run build && sudo cp -r ./src/assets ./build && sudo cp .env ./build"
+    "build-linux": "npm run build && sudo cp -r ./src/assets ./build && sudo cp .env ./build",
+    "build-windows": "npm run build && xcopy /i \"./src/assets\" \"./build/assets/\" && xcopy \".env\" \"./build\""
   },
   "author": "",
   "license": "ISC",

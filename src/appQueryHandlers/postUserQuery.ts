@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express';
-import User from 'src/models/User';
+import User from '../models/User';
 import createAppHandler from './createAppHandler';
 import TelegramBot from 'node-telegram-bot-api';
-import { BOT_APP_URL } from 'src/lib/constants';
+import { BOT_APP_URL } from '../lib/constants';
 
 export default function postUserQuery(req: Request, res: Response) {
   createAppHandler({

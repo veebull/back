@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import User from 'src/models/User';
+import User from '../models/User';
 import createAppHandler from './createAppHandler';
 
 export default function getUserQuery(req: Request, res: Response) {

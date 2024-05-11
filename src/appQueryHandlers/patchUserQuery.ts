@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import User from 'src/models/User';
+import User from '../models/User';
 import createAppHandler from './createAppHandler';
 import TelegramBot from 'node-telegram-bot-api';
 
@@ -14,9 +14,9 @@ export default function patchUserQuery(req: Request, res: Response) {
         await User.findOneAndUpdate({ tgUserId: id }, { $set: { 'dataGame.totalTaps': newTotalTaps } }, { new: true });
 
         res.send({ success: true });
+      } else {
+        res.send({ success: false });
       }
-
-      res.send({ success: false });
     },
   });
 }

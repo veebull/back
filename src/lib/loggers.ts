@@ -11,6 +11,12 @@ const getLoggerOptions = (filename: string) => ({
       filename: join(__dirname, 'logs', `${filename}-%DATE%.log`),
       datePattern: 'YYYY-MM-DD',
       maxFiles: '7d',
+      format: winston.format.combine(
+        winston.format.timestamp({
+          format: 'YYYY-MM-DD HH:mm:ss',
+        }),
+        winston.format.json(),
+      ),
     } as DailyRotateFileTransportOptions),
   ],
   format: winston.format.json(),
