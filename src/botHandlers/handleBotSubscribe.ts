@@ -22,17 +22,9 @@ export default async function handleBotSubscribe(
         }
       };
 
-      const existingUser = await User.findOne({ tgUserId: id });
-
-      if (existingUser) {
-        if (existingUser.isSubscribed) {
-          sendFunc(msgOnCommands.msgOnSubscribeRepeat);
-        } else {
-          await User.findOneAndUpdate({ tgUserId: id }, { isSubscribed: true });
-          sendFunc(msgOnCommands.msgOnSubscribeSuccess);
-        }
-      } else {
-        await User.create({
+      const existingUser = await User.findOneAndUpdate(
+        { tgUserId: id },
+        {
           tgUserId: id,
           firstName: first_name,
           isSubscribed: true,
@@ -40,8 +32,13 @@ export default async function handleBotSubscribe(
           username: username || '',
           is_bot: is_bot || null,
           languageCode: language_code || '',
-        });
+        },
+        { upsert: true, new: false },
+      );
 
+      if (existingUser?.isSubscribed) {
+        sendFunc(msgOnCommands.msgOnSubscribeRepeat);
+      } else {
         sendFunc(msgOnCommands.msgOnSubscribeSuccess);
       }
     },

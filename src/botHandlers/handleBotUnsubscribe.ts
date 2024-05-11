@@ -22,16 +22,18 @@ export default async function handleBotUnsubscribe(
         }
       };
 
-      const existingUser = await User.findOne({ tgUserId: id });
+      const existingUser = await User.findOneAndUpdate(
+        { tgUserId: id, isSubscribed: true },
+        { isSubscribed: false },
+        { new: false },
+      );
 
       if (!existingUser) {
         sendFunc(msgOnCommands.msgOnUnsubscribeNoRegister);
-      } else if (!existingUser?.isSubscribed) {
-        sendFunc(msgOnCommands.msgOnUnsubscribeRepeat);
       } else {
-        await User.findOneAndUpdate({ tgUserId: id }, { isSubscribed: false });
-
-        sendFunc(msgOnCommands.msgOnUnsubscribeSuccess);
+        sendFunc(
+          existingUser.isSubscribed ? msgOnCommands.msgOnUnsubscribeSuccess : msgOnCommands.msgOnUnsubscribeRepeat,
+        );
       }
     },
   });
