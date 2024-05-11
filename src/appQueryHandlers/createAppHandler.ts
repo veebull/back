@@ -1,32 +1,22 @@
-import type { Request, Response } from 'express';
-import authUserTgData from '../lib/authUserTgData';
+import type { NextFunction } from 'express';
 
 interface CustomError extends Error {
   code?: number;
 }
 
 interface ICreateAppHandler {
-  req: Request;
-  res: Response;
+  next: NextFunction;
   callback: () => Promise<void>;
 }
 
-export default async function createAppHandler({ req, res, callback }: ICreateAppHandler) {
+export default async function createAppHandler({ next, callback }: ICreateAppHandler) {
   try {
-    const isValide = authUserTgData(req);
-    if (!isValide) {
-      res.send({ error: { message: 'хэш не совпадает, работа с данными невозможна' } });
-    } else {
-      await callback();
-    }
+    await callback();
   } catch (err) {
-    res.statusCode = 500;
     if ((err as CustomError)?.code === 11000) {
-      console.error('пользователь уже существует');
-      res.send({ error: { message: 'пользователь уже существует' } });
+      next({ message: 'пользователь уже существует', err });
     } else {
-      console.error(err);
-      res.send({ error: { message: 'ошибка при обработке запроса' } });
+      next({ message: 'ошибка при обработке запроса', err });
     }
   }
 }

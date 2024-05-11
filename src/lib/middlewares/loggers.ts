@@ -30,7 +30,7 @@ function createLogger(filename: string, isExpress = false) {
 }
 
 export const requestAppLogger = createLogger('requestApp.log', true);
-export const errorAppLogger = createLogger('errorsApp.log', true);
+export const errorAppLogger = createLogger('errorsApp.log');
 
 export const requestBotLogger = createLogger('requestBot.log');
 export const errorBotLogger = createLogger('errorsBot.log');

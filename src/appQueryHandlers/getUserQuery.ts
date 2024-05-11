@@ -1,15 +1,16 @@
-import type { Request, Response } from 'express';
 import User from '../models/User';
 import createAppHandler from './createAppHandler';
+import { TAppQuery } from 'src/lib/types';
 
-export default function getUserQuery(req: Request, res: Response) {
+const getUserQuery: TAppQuery = function (req, res, next) {
   return createAppHandler({
-    req,
-    res,
+    next,
     callback: async () => {
       const id = JSON.parse(req.query.user as string).id;
       const user = await User.findOne({ tgUserId: id });
       res.send({ user });
     },
   });
-}
+};
+
+export default getUserQuery;

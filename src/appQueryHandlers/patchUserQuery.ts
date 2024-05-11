@@ -1,12 +1,11 @@
-import type { Request, Response } from 'express';
 import User from '../models/User';
 import createAppHandler from './createAppHandler';
 import TelegramBot from 'node-telegram-bot-api';
+import { TAppQuery } from 'src/lib/types';
 
-export default function patchUserQuery(req: Request, res: Response) {
+const patchUserQuery: TAppQuery = function (req, res, next) {
   createAppHandler({
-    req,
-    res,
+    next,
     callback: async () => {
       const { id } = JSON.parse(req.query.user as string) as TelegramBot.User;
       const newTotalTaps = req?.body?.dataGame?.newTotalTaps;
@@ -19,4 +18,6 @@ export default function patchUserQuery(req: Request, res: Response) {
       }
     },
   });
-}
+};
+
+export default patchUserQuery;

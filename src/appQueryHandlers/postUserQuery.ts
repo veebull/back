@@ -1,13 +1,12 @@
-import type { Request, Response } from 'express';
 import User from '../models/User';
 import createAppHandler from './createAppHandler';
 import TelegramBot from 'node-telegram-bot-api';
 import { BOT_APP_URL } from '../lib/constants';
+import { TAppQuery } from 'src/lib/types';
 
-export default function postUserQuery(req: Request, res: Response) {
+const postUserQuery: TAppQuery = function (req, res, next) {
   createAppHandler({
-    req,
-    res,
+    next,
     callback: async () => {
       const { id, first_name, username, is_bot, language_code, last_name } = JSON.parse(
         req.query.user as string,
@@ -36,4 +35,6 @@ export default function postUserQuery(req: Request, res: Response) {
       res.send({ user });
     },
   });
-}
+};
+
+export default postUserQuery;

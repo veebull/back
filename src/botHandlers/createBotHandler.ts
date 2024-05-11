@@ -1,5 +1,5 @@
 import { bot } from '../bot';
-import { errorBotLogger } from '../lib/loggers';
+import { errorBotLogger } from '../lib/middlewares/loggers';
 
 interface CustomError extends Error {
   message: string;
