@@ -4,12 +4,17 @@ import { TAppQuery } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const authUserTgData: TAppQuery = function (req, _, next) {
-  const initHash = req?.query?.hash;
-  const initData = req.originalUrl.split('?')[1];
-  const secretKey = createHmac('sha256', 'WebAppData').update(TOKEN);
-  const hash = createHmac('sha256', secretKey.digest()).update(initData).digest('hex');
+  const initData = new URLSearchParams(req.query as Record<string, string>);
+  initData.sort();
 
-  if (hash !== initHash) {
+  const hash = initData.get('hash');
+  initData.delete('hash');
+
+  const dataToCheck = [...initData.entries()].map(([key, value]) => key + '=' + value).join('\n');
+  const secretKey = createHmac('sha256', 'WebAppData').update(TOKEN).digest();
+  const _hash = createHmac('sha256', secretKey).update(dataToCheck).digest('hex');
+
+  if (hash !== _hash) {
     next({ message: 'хэш не совпадает, работа с данными невозможна' });
   }
 
