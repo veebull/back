@@ -1,6 +1,7 @@
-import TelegramBot from "node-telegram-bot-api";
-import { msgOnCommands } from "../lib/constants";
-import User from "../models/User";
+import TelegramBot from 'node-telegram-bot-api';
+import { msgOnCommands } from '../lib/constants';
+import User from '../models/User';
+import createBotHandler from './createBotHandler';
 
 export default async function handleBotSubscribe(
   data: TelegramBot.User,
@@ -8,40 +9,41 @@ export default async function handleBotSubscribe(
   chatId: number | string,
   isCallback = false,
 ) {
-  const { id, first_name, username, is_bot, language_code, last_name } = data;
-  const sendFunc = async (msg: string) => {
-    if (isCallback) {
-      return bot.answerCallbackQuery(`${chatId}`, { text: msg });
-    } else {
-      return bot.sendMessage(`${chatId}`, msg);
-    }
-  };
+  createBotHandler({
+    chatId,
+    erMsg: msgOnCommands.msgOnSubscribeError,
+    callback: async () => {
+      const { id, first_name, username, is_bot, language_code, last_name } = data;
+      const sendFunc = async (msg: string) => {
+        if (isCallback) {
+          return bot.answerCallbackQuery(`${chatId}`, { text: msg });
+        } else {
+          return bot.sendMessage(`${chatId}`, msg);
+        }
+      };
 
-  try {
-    const existingUser = await User.findOne({ tgUserId: id });
+      const existingUser = await User.findOne({ tgUserId: id });
 
-    if (existingUser) {
-      if (existingUser.isSubscribed) {
-        sendFunc(msgOnCommands.msgOnSubscribeRepeat);
+      if (existingUser) {
+        if (existingUser.isSubscribed) {
+          sendFunc(msgOnCommands.msgOnSubscribeRepeat);
+        } else {
+          await User.findOneAndUpdate({ tgUserId: id }, { isSubscribed: true });
+          sendFunc(msgOnCommands.msgOnSubscribeSuccess);
+        }
       } else {
-        await User.findOneAndUpdate({ tgUserId: id }, { isSubscribed: true })
+        await User.create({
+          tgUserId: id,
+          firstName: first_name,
+          isSubscribed: true,
+          lastName: last_name || '',
+          username: username || '',
+          is_bot: is_bot || null,
+          languageCode: language_code || '',
+        });
+
         sendFunc(msgOnCommands.msgOnSubscribeSuccess);
       }
-    } else {
-      await User.create({
-        tgUserId: id,
-        firstName: first_name,
-        isSubscribed: true,
-        lastName: last_name || '',
-        username: username || '',
-        is_bot: is_bot || null,
-        languageCode: language_code || '',
-      })
-
-      sendFunc(msgOnCommands.msgOnSubscribeSuccess);
-    }
-  } catch (err) {
-    console.error(err)
-    sendFunc(msgOnCommands.msgOnSubscribeError);
-  }
+    },
+  });
 }

@@ -3,12 +3,15 @@ import { TOKEN, commands } from './lib/constants';
 import handleBotStart from './botHandlers/handeBotStart';
 import handleBotSubscribe from './botHandlers/handleBotSubscribe';
 import handleBotUnsubscribe from './botHandlers/handleBotUnsubscribe';
+import { requestBotLogger } from './lib/loggers';
 
-const bot = new TelegramBot(TOKEN, { polling: true });
+export const bot = new TelegramBot(TOKEN, { polling: true });
 
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
+
+  requestBotLogger.info(`chatId: ${chatId}, text: ${text}, msg: ${JSON.stringify(msg)}`);
 
   if (text === commands.start) await handleBotStart(chatId, bot);
   if (text === commands.subscribe) await handleBotSubscribe(msg.from!, bot, chatId);
@@ -19,6 +22,8 @@ bot.on('message', async (msg) => {
 bot.on('callback_query', async (query) => {
   const chatId = query.id;
   const text = query.data;
+
+  requestBotLogger.info(`chatId: ${chatId}, text: ${text}, query: ${JSON.stringify(query)}`);
 
   if (text === commands.subscribe) await handleBotSubscribe(query.from!, bot, chatId, true);
   if (text === commands.unsubscribe) await handleBotUnsubscribe(query.from!, bot, chatId, true);

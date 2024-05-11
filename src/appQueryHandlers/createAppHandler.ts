@@ -1,11 +1,17 @@
-import type { Request, Response } from "express";
-import authUserTgData from "../lib/authUserTgData";
+import type { Request, Response } from 'express';
+import authUserTgData from '../lib/authUserTgData';
 
 interface CustomError extends Error {
   code?: number;
 }
 
-export default async function fabricHandlers(req: Request, res: Response, callback: () => void) {
+interface ICreateAppHandler {
+  req: Request;
+  res: Response;
+  callback: () => Promise<void>;
+}
+
+export default async function createAppHandler({ req, res, callback }: ICreateAppHandler) {
   try {
     const isValide = authUserTgData(req);
     if (!isValide) {

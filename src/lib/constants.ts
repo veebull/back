@@ -1,16 +1,21 @@
-import path from "path";
+import { join } from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const IMG_PATH = path.join(__dirname, '../assets', 'cat.jpg');
 export const PORT = process.env.PORT || 5000;
 export const MONGO_URL = process.env.MONGO_URL!;
 export const TOKEN = process.env.TOKEN_BOT!;
 export const WEB_APP_URL = process.env.WEB_APP_URL!;
-export const BOT_NAME = 'https://t.me/Clicker_Game_Blockchain_Bot';
-export const BOT_APP_URL = `${BOT_NAME}/game`
+export const BOT_APP_URL = process.env.BOT_APP_URL!;
 
+export const IMG_PATH = join(__dirname, '../assets', 'cat.jpg');
+export const ALLOWED_ORIGIN = process.env.MODE === 'dev' ? '*.ngrok-free.app' : BOT_APP_URL;
+
+export const corsOptions = {
+  origin: ALLOWED_ORIGIN,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 export const mongooseOptions = {
   serverSelectionTimeoutMS: 5000,
@@ -23,7 +28,7 @@ export const commands = {
   unsubscribe: '/unsubscribe',
   start: '/start',
   help: '/help',
-}
+};
 
 export const msgOnCommands = {
   msgOnStart: 'Welcome! How are you? Play?',
@@ -37,4 +42,4 @@ export const msgOnCommands = {
   msgOnUnsubscribeRepeat: 'Не переживайте, вы уже отписались.',
   msgOnUnsubscribeNoRegister: 'Вы ещё не подписались',
   msgOnUnsubscribeError: 'Что-то пошло не так',
-}
+};
