@@ -3,4 +3,7 @@ dist
 build
 .env
 
+logs
+.log
+
 packaje-lock.json

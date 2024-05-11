@@ -1,5 +1,6 @@
 import { join } from 'path';
 import { DailyRotateFileTransportOptions } from 'winston-daily-rotate-file';
+import 'winston-daily-rotate-file';
 import winston, { Logger } from 'winston';
 import expressWinston from 'express-winston';
 import { Handler } from 'express';

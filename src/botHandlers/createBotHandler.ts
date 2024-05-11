@@ -17,6 +17,6 @@ export default async function createBotHandler({ chatId, erMsg, callback }: ICre
   } catch (err) {
     console.error('new Error: ' + (err as CustomError)?.message);
     bot.sendMessage(chatId, erMsg);
-    errorBotLogger.error(`chatId: ${chatId}, erMsg: ${erMsg}, err: ${err}`);
+    errorBotLogger.error(`chatId: ${chatId}, erMsg: ${erMsg}, err: ${JSON.stringify(err)}`);
   }
 }
