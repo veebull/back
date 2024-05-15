@@ -13,10 +13,11 @@ export default async function createAppHandler({ next, callback }: ICreateAppHan
   try {
     await callback();
   } catch (err) {
+
     if ((err as CustomError)?.code === 11000) {
       next({ message: 'пользователь уже существует', err });
     } else {
-      next({ message: 'ошибка при обработке запроса', err });
+      next({ message: err });
     }
   }
 }

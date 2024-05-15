@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const PORT = process.env.PORT || 5000;
+export const PORT = process.env.PORT || 5500;
 export const MONGO_URL = process.env.MONGO_URL!;
 export const TOKEN = process.env.TOKEN_BOT!;
 export const WEB_APP_URL = process.env.WEB_APP_URL!;
@@ -12,7 +12,7 @@ export const BOT_APP_URL = process.env.BOT_APP_URL!;
 export const IMG_PATH = join(__dirname, '../assets', 'cat.jpg');
 
 export const corsOptions = {
-  origin: WEB_APP_URL,
+  origin: "http://localhost:3000",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 

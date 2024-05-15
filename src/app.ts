@@ -12,8 +12,11 @@ const mongoose = require('mongoose') as typeof import('mongoose');
 try {
   mongoose.connect(MONGO_URL, mongooseOptions);
   const app = express();
-
-  app.use(cors(corsOptions));
+  if(process.env.NODE_ENV !== 'production'){
+    app.use(cors());
+  } else {
+    app.use(cors(corsOptions));
+  }
   app.use(helmet());
   app.use(requestAppLogger);
 

@@ -13,8 +13,8 @@ const authUserTgData: TAppQuery = function (req, _, next) {
   const dataToCheck = [...initData.entries()].map(([key, value]) => key + '=' + value).join('\n');
   const secretKey = createHmac('sha256', 'WebAppData').update(TOKEN).digest();
   const _hash = createHmac('sha256', secretKey).update(dataToCheck).digest('hex');
-
-  if (hash !== _hash) {
+  // console.log("isDev", process.env.NODE_ENV == 'production')
+  if (process.env.NODE_ENV == 'production' && hash !== _hash) {
     next({ message: 'хэш не совпадает, работа с данными невозможна' });
   }
 
