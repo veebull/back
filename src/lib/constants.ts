@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const PORT = process.env.PORT || 5500;
+export const PORT = process.env.PORT || 5000;
 export const MONGO_URL = process.env.MONGO_URL!;
 export const TOKEN = process.env.TOKEN_BOT!;
 export const WEB_APP_URL = process.env.WEB_APP_URL!;
